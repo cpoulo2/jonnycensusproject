@@ -3,7 +3,7 @@
 # What:         R script template for data analysis
 # 
 # Objective:    Provide a didactic framework for exploratory data analysis that 
-#               will provide 1) a method for organizing analyses, how to use
+#               will provide 1) a method for orGganizing analyses, how to use
 #               some of the more common tool for cleaning and preparing data,
 #               and tools for visualizing data (including mapping).
 #
@@ -64,7 +64,7 @@ options(scipen=999)   # R displays large numbers in scientific notion. This comm
                       # prevents that.
 
 options(tigris_use_cache = TRUE) # This will allow you to download Census 
-                                 # shapefiles when downloading the census data.
+# shapefiles when downloading the census data.
 
 # Installing the Census API key ----
 
@@ -567,112 +567,10 @@ ca_analysis <- ca_analysis |>
          uqrentchange = (uqrent19-uqrent10)/uqrent10, na.rm=T,
          latinechange = (latine19-latine10)/latine10, na.rm=T)
 
-# Unit change and bedroom change. 
-
-ap <- censusdata_ca |>
-  filter(community == "ALBANY PARK")
-
-rent700_49 <- get_acs(geography = "tract",
-                    variables = "B25061_015",
-                    state = "IL",
-                    county = "Cook",
-                    year = 2019,
-                    survey = "acs5") |>
-  mutate(rentlow = 700,
-         renthigh = 749.999999)
-
-# CONTRACT RENT
-# Universe:  Renter-occupied housing units
-B25056_001	Total:
-  B25056_002	With cash rent:
-  B25056_003	Less than $100
-B25056_004	$100 to $149
-B25056_005	$150 to $199
-B25056_006	$200 to $249
-B25056_007	$250 to $299
-B25056_008	$300 to $349
-B25056_009	$350 to $399
-B25056_010	$400 to $449
-B25056_011	$450 to $499
-B25056_012	$500 to $549
-B25056_013	$550 to $599
-B25056_014	$600 to $649
-B25056_015	$650 to $699
-B25056_016	$700 to $749
-B25056_017	$750 to $799
-B25056_018	$800 to $899
-B25056_019	$900 to $999
-B25056_020	$1,000 to $1,249
-B25056_021	$1,250 to $1,499
-B25056_022	$1,500 to $1,999
-B25056_023	$2,000 to $2,499
-B25056_024	$2,500 to $2,999
-B25056_025	$3,000 to $3,499
-B25056_026	$3,500 or more
-B25056_027	No cash rent
-
-
-# Adjusting gross rent to contract rent (need to do this for bedroom analysis)
-
-# Aggregate and median
-
-# AGGREGATE CONTRACT RENT (DOLLARS)
-# Universe:  Renter-occupied housing units paying cash rent
-# B25060_001	Aggregate contract rent
-
-# MEDIAN GROSS RENT (DOLLARS)
-# Universe:  Renter-occupied housing units paying cash rent
-# B25064_001	Median gross rent
-
-# AGGREGATE GROSS RENT (DOLLARS)
-# Universe:  Renter-occupied housing units paying cash rent
-# B25065_001	Aggregate gross rent
-
-# BEDROOMS BY GROSS RENT
-# Universe:  Renter-occupied housing units
-
-
-B25068_001	Total:
-  B25068_002	No bedroom:
-  B25068_003	With cash rent:
-  B25068_004	Less than $300
-B25068_005	$300 to $499
-B25068_006	$500 to $749
-B25068_007	$750 to $999
-B25068_008	$1,000 to $1,499
-B25068_009	$1,500 or more
-B25068_010	No cash rent
-B25068_011	1 bedroom:
-  B25068_012	With cash rent:
-  B25068_013	Less than $300
-B25068_014	$300 to $499
-B25068_015	$500 to $749
-B25068_016	$750 to $999
-B25068_017	$1,000 to $1,499
-B25068_018	$1,500 or more
-B25068_019	No cash rent
-B25068_020	2 bedrooms:
-  B25068_021	With cash rent:
-  B25068_022	Less than $300
-B25068_023	$300 to $499
-B25068_024	$500 to $749
-B25068_025	$750 to $999
-B25068_026	$1,000 to $1,499
-B25068_027	$1,500 or more
-B25068_028	No cash rent
-B25068_029	3 or more bedrooms:
-  B25068_030	With cash rent:
-  B25068_031	Less than $300
-B25068_032	$300 to $499
-B25068_033	$500 to $749
-B25068_034	$750 to $999
-B25068_035	$1,000 to $1,499
-B25068_036	$1,500 or more
-B25068_037	No cash rent
+#go1028go
+Leo Panitch"goldstanard"
 
 
 
-ap <- ap |>
-  left_join(rent700_49,by="GEOID")
 
 # Analyze and visualize data ----
