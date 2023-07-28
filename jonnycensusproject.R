@@ -581,36 +581,257 @@ rent700_49 <- get_acs(geography = "tract",
   mutate(rentlow = 700,
          renthigh = 749.999999)
 
-# CONTRACT RENT
-# Universe:  Renter-occupied housing units
-B25056_001	Total:
-  B25056_002	With cash rent:
-  B25056_003	Less than $100
-B25056_004	$100 to $149
-B25056_005	$150 to $199
-B25056_006	$200 to $249
-B25056_007	$250 to $299
-B25056_008	$300 to $349
-B25056_009	$350 to $399
-B25056_010	$400 to $449
-B25056_011	$450 to $499
-B25056_012	$500 to $549
-B25056_013	$550 to $599
-B25056_014	$600 to $649
-B25056_015	$650 to $699
-B25056_016	$700 to $749
-B25056_017	$750 to $799
-B25056_018	$800 to $899
-B25056_019	$900 to $999
-B25056_020	$1,000 to $1,249
-B25056_021	$1,250 to $1,499
-B25056_022	$1,500 to $1,999
-B25056_023	$2,000 to $2,499
-B25056_024	$2,500 to $2,999
-B25056_025	$3,000 to $3,499
-B25056_026	$3,500 or more
-B25056_027	No cash rent
+acs_var <- load_variables(2010, "acs5", cache = TRUE)
 
+# CONTRACT RENT 2010
+# Universe:  Renter-occupied housing units
+rent_total <- get_acs(geography = "tract", variable= "B25056_001", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  Total:
+rent_wcr__ <- get_acs(geography = "tract", variable= "B25056_002", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    With cash rent:
+rent_lt100 <- get_acs(geography = "tract", variable= "B25056_003", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  Less than $100
+rent_149__ <- get_acs(geography = "tract", variable= "B25056_004", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $100 to $149
+rent_199__ <- get_acs(geography = "tract", variable= "B25056_005", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $150 to $199
+rent_249__ <- get_acs(geography = "tract", variable= "B25056_006", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $200 to $249
+rent_299__ <- get_acs(geography = "tract", variable= "B25056_007", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $250 to $299
+rent_349__ <- get_acs(geography = "tract", variable= "B25056_008", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $300 to $349
+rent_399__ <- get_acs(geography = "tract", variable= "B25056_009", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $350 to $399
+rent_449__ <- get_acs(geography = "tract", variable= "B25056_010", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $400 to $449
+rent_499__ <- get_acs(geography = "tract", variable= "B25056_011", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $450 to $499
+rent_549__ <- get_acs(geography = "tract", variable= "B25056_012", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $500 to $549
+rent_599__ <- get_acs(geography = "tract", variable= "B25056_013", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $550 to $599
+rent_649__ <- get_acs(geography = "tract", variable= "B25056_014", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $600 to $649
+rent_699__ <- get_acs(geography = "tract", variable= "B25056_015", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $650 to $699
+rent_749__ <- get_acs(geography = "tract", variable= "B25056_016", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $700 to $749
+rent_799__ <- get_acs(geography = "tract", variable= "B25056_017", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $750 to $799
+rent_899__ <- get_acs(geography = "tract", variable= "B25056_018", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $800 to $899
+rent_999__ <- get_acs(geography = "tract", variable= "B25056_019", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $900 to $999
+rent1249__ <- get_acs(geography = "tract", variable= "B25056_020", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $1,000 to $1,249
+rent1499__ <- get_acs(geography = "tract", variable= "B25056_021", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $1,250 to $1,499
+rent1999__ <- get_acs(geography = "tract", variable= "B25056_022", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $1,500 to $1,999
+rentmt2k__ <- get_acs(geography = "tract", variable= "B25056_023", state = "IL", county = "Cook", year = 2010, survey = "acs5") #  $2,000 to $2,499
+rent_ncr__ <- get_acs(geography = "tract", variable= "B25056_024", state = "IL", county = "Cook", year = 2010, survey = "acs5") #	    $2,500 to $2,999
+
+
+rent_total <- rent_total[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =   NA)
+rent_wcr__ <- rent_wcr__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =   NA)
+rent_lt100 <- rent_lt100[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =   99)
+rent_149__ <- rent_149__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  149)
+rent_199__ <- rent_199__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  199)
+rent_249__ <- rent_249__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  249)
+rent_299__ <- rent_299__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  299)
+rent_349__ <- rent_349__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  349)
+rent_399__ <- rent_399__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  399)
+rent_449__ <- rent_449__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  449)
+rent_499__ <- rent_499__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  499)
+rent_549__ <- rent_549__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  549)
+rent_599__ <- rent_599__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  599)
+rent_649__ <- rent_649__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  649)
+rent_699__ <- rent_699__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  699)
+rent_749__ <- rent_749__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  749)
+rent_799__ <- rent_799__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  799)
+rent_899__ <- rent_899__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  899)
+rent_999__ <- rent_999__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =  999)
+rent1249__ <- rent1249__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit = 1249)
+rent1499__ <- rent1499__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit = 1499)
+rent1999__ <- rent1999__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit = 1999)
+rentmt2k__ <- rentmt2k__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit = 2000)
+rent_ncr__ <- rent_ncr__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit =    0)
+
+ap_rent_total <- rent_total |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment) 
+ap_rent_wcr__ <- rent_wcr__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_lt100 <- rent_lt100 |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_149__ <- rent_149__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_199__ <- rent_199__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_249__ <- rent_249__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_299__ <- rent_299__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_349__ <- rent_349__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_399__ <- rent_399__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_449__ <- rent_449__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_499__ <- rent_499__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_549__ <- rent_549__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_599__ <- rent_599__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_649__ <- rent_649__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_699__ <- rent_699__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_749__ <- rent_749__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_799__ <- rent_799__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_899__ <- rent_899__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_999__ <- rent_999__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent1249__ <- rent1249__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent1499__ <- rent1499__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent1999__ <- rent1999__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rentmt2k__ <- rentmt2k__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+ap_rent_ncr__ <- rent_ncr__ |> left_join(ap[,c(1,2)], by = "GEOID") |> filter(!is.na(lqrent10)) |> mutate(lqrent10_infadj19 = lqrent10 * inflationadjustment)
+
+
+lowrent <- ap_rent_total |>
+           bind_rows(ap_rent_wcr__) |>
+           bind_rows(ap_rent_lt100) |>
+           bind_rows(ap_rent_149__) |>
+           bind_rows(ap_rent_199__) |>
+           bind_rows(ap_rent_249__) |>
+           bind_rows(ap_rent_299__) |>
+           bind_rows(ap_rent_349__) |>
+           bind_rows(ap_rent_399__) |>
+           bind_rows(ap_rent_449__) |>
+           bind_rows(ap_rent_499__) |>
+           bind_rows(ap_rent_549__) |>
+           bind_rows(ap_rent_599__) |>
+           bind_rows(ap_rent_649__) |>
+           bind_rows(ap_rent_699__) |>
+           bind_rows(ap_rent_749__) |>
+           bind_rows(ap_rent_799__) |>
+           bind_rows(ap_rent_899__) |>
+           bind_rows(ap_rent_999__) |>
+           bind_rows(ap_rent1249__) |>
+           bind_rows(ap_rent1499__) |>
+           bind_rows(ap_rent1999__) |>
+           bind_rows(ap_rentmt2k__) |>
+           bind_rows(ap_rent_ncr__)
+
+lowrent <- lowrent |>
+  mutate(lowrentunit10 = case_when(lqlimit < lqrent10 ~ estimate,
+                                 TRUE ~ 0))
+
+aplowrent <- lowrent |>
+  group_by(GEOID) |>
+  dplyr::summarise(lowrent10 = sum(lowrentunit10,na.rm=T),
+                   lqrent10 = mean(lqrent10,na.rm=T)) |>
+  left_join(ap_rent_total[,c(1:4)],by="GEOID") |>
+  mutate(lowrentunit_per = lowrent10/estimate)
+
+# 2019
+
+rent_total <- get_acs(geography = "tract", variable= "B25056_001", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  Total:
+rent_wcr__ <- get_acs(geography = "tract", variable= "B25056_002", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    With cash rent:
+rent_lt100 <- get_acs(geography = "tract", variable= "B25056_003", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  Less than $100
+rent_149__ <- get_acs(geography = "tract", variable= "B25056_004", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $100 to $149
+rent_199__ <- get_acs(geography = "tract", variable= "B25056_005", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $150 to $199
+rent_249__ <- get_acs(geography = "tract", variable= "B25056_006", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $200 to $249
+rent_299__ <- get_acs(geography = "tract", variable= "B25056_007", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $250 to $299
+rent_349__ <- get_acs(geography = "tract", variable= "B25056_008", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $300 to $349
+rent_399__ <- get_acs(geography = "tract", variable= "B25056_009", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $350 to $399
+rent_449__ <- get_acs(geography = "tract", variable= "B25056_010", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $400 to $449
+rent_499__ <- get_acs(geography = "tract", variable= "B25056_011", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $450 to $499
+rent_549__ <- get_acs(geography = "tract", variable= "B25056_012", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $500 to $549
+rent_599__ <- get_acs(geography = "tract", variable= "B25056_013", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $550 to $599
+rent_649__ <- get_acs(geography = "tract", variable= "B25056_014", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $600 to $649
+rent_699__ <- get_acs(geography = "tract", variable= "B25056_015", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $650 to $699
+rent_749__ <- get_acs(geography = "tract", variable= "B25056_016", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $700 to $749
+rent_799__ <- get_acs(geography = "tract", variable= "B25056_017", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $750 to $799
+rent_899__ <- get_acs(geography = "tract", variable= "B25056_018", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $800 to $899
+rent_999__ <- get_acs(geography = "tract", variable= "B25056_019", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $900 to $999
+rent1249__ <- get_acs(geography = "tract", variable= "B25056_020", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $1,000 to $1,249
+rent1499__ <- get_acs(geography = "tract", variable= "B25056_021", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $1,250 to $1,499
+rent1999__ <- get_acs(geography = "tract", variable= "B25056_022", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    $1,500 to $1,999
+rent2499__ <- get_acs(geography = "tract", variable= "B25056_023", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $2,000 to $2,499
+rent2999__ <- get_acs(geography = "tract", variable= "B25056_024", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $2,500 to $2,999
+rent3499__ <- get_acs(geography = "tract", variable= "B25056_025", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $3,000 to $3,499
+rentmt34h_ <- get_acs(geography = "tract", variable= "B25056_026", state = "IL", county = "Cook", year = 2019, survey = "acs5") #  $3,500 or more
+rent_ncr__ <- get_acs(geography = "tract", variable= "B25056_027", state = "IL", county = "Cook", year = 2019, survey = "acs5") #	    No cash rent
+
+rent2499__ <- rent2499__[,c(1,4)] |> rename("rent2499__" = "estimate")
+rent2999__ <- rent2999__[,c(1,4)] |> rename("rent2999__" = "estimate")
+rent3499__ <- rent3499__[,c(1,4)] |> rename("rent3499__" = "estimate")
+rentmt34h_ <- rentmt34h_[,c(1,4)] |> rename("rentmt34h_" = "estimate")
+
+rentmt2k__ <- rent2499__ |>
+  left_join(rent2999__,by="GEOID") |>
+  left_join(rent3499__,by="GEOID") |>
+  left_join(rentmt34h_,by="GEOID") |>
+  mutate(estimate = rent2499__+rent2999__+rent3499__+rentmt34h_,
+         variable = "B25056_023") |>
+  select(GEOID,estimate,variable)
+
+ap_rent_total <- rent_total[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =   NA)
+ap_rent_wcr__ <- rent_wcr__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =   NA)
+ap_rent_lt100 <- rent_lt100[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =   99)
+ap_rent_149__ <- rent_149__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  149)
+ap_rent_199__ <- rent_199__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  199)
+ap_rent_249__ <- rent_249__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  249)
+ap_rent_299__ <- rent_299__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  299)
+ap_rent_349__ <- rent_349__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  349)
+ap_rent_399__ <- rent_399__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  399)
+ap_rent_449__ <- rent_449__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  449)
+ap_rent_499__ <- rent_499__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  499)
+ap_rent_549__ <- rent_549__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  549)
+ap_rent_599__ <- rent_599__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  599)
+ap_rent_649__ <- rent_649__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  649)
+ap_rent_699__ <- rent_699__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  699)
+ap_rent_749__ <- rent_749__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  749)
+ap_rent_799__ <- rent_799__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  799)
+ap_rent_899__ <- rent_899__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  899)
+ap_rent_999__ <- rent_999__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =  999)
+ap_rent1249__ <- rent1249__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 = 1249)
+ap_rent1499__ <- rent1499__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 = 1499)
+ap_rent1999__ <- rent1999__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 = 1999)
+ap_rentmt2k__ <- rentmt2k__            |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 = 2000)
+ap_rent_ncr__ <- rent_ncr__[,c(1,3,4)] |> mutate(var2 = substr(variable,1,6)) |> mutate(lqlimit19 =    0)
+
+
+lowrent19 <- ap_rent_total |>
+  bind_rows(ap_rent_wcr__) |>
+  bind_rows(ap_rent_lt100) |>
+  bind_rows(ap_rent_149__) |>
+  bind_rows(ap_rent_199__) |>
+  bind_rows(ap_rent_249__) |>
+  bind_rows(ap_rent_299__) |>
+  bind_rows(ap_rent_349__) |>
+  bind_rows(ap_rent_399__) |>
+  bind_rows(ap_rent_449__) |>
+  bind_rows(ap_rent_499__) |>
+  bind_rows(ap_rent_549__) |>
+  bind_rows(ap_rent_599__) |>
+  bind_rows(ap_rent_649__) |>
+  bind_rows(ap_rent_699__) |>
+  bind_rows(ap_rent_749__) |>
+  bind_rows(ap_rent_799__) |>
+  bind_rows(ap_rent_899__) |>
+  bind_rows(ap_rent_999__) |>
+  bind_rows(ap_rent1249__) |>
+  bind_rows(ap_rent1499__) |>
+  bind_rows(ap_rent1999__) |>
+  bind_rows(ap_rentmt2k__) |>
+  bind_rows(ap_rent_ncr__)
+                                            
+
+lowrent19 <- lowrent19 |>
+  rename("estimate19" = "estimate")
+
+lowrent <- lowrent |>
+  left_join(lowrent19[,c(1,3,5)]) |>
+  mutate(lowrentunit19 = case_when(lqlimit19 < lqrent10_infadj19 ~ estimate19,
+                                   TRUE ~ 0))
+
+aplowrent <- lowrent |>
+  group_by(GEOID) |>
+  dplyr::summarise(lowrent10 = sum(lowrentunit10,na.rm=T),
+                   lqrent10 = mean(lqrent10,na.rm=T),
+                   lowrent19 = sum(lowrentunit19,na.rm=T),
+                   lqrent19 = mean(lqrent10_infadj19,na.rm=T),
+                   estimate = mean(estimate,na.rm=T),
+                   estimate19 = mean(estimate19,na.rm=T)) |>
+  mutate(lowrentunit10_per = lowrent10/estimate,
+         lowrentunit19_per = lowrent19/estimate19)       
+
+# This didn't work. Some of the percentages are over 100%. review..revise...run again.
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
+                                            
 
 # Adjusting gross rent to contract rent (need to do this for bedroom analysis)
 
